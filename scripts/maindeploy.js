@@ -17,13 +17,13 @@ async function main() {
   //     "You are trying to deploy a contract to the Hardhat Network, which" +
   //       "gets automatically created and destroyed every time. Use the Hardhat" +
   //       " option '--network localhost'"
-  //   );
+  //   );PaymentSplitter
   // }
 
   // ethers is avaialble in the global scope
-  let nFT
-  let Bytes
-  let bytes
+  let starz_address = "0x08280c0e5038c26f775ff94A67466cc618aB3c3c"
+  let Vesting
+  let vesting
   const [deployer,per1,per2] = await ethers.getSigners();
   console.log(
     "Deploying the contracts with the account:",
@@ -32,28 +32,22 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  Bytes = await ethers.getContractFactory("Bytes")
+  Vesting = await ethers.getContractFactory("Vesting")
     
-  bytes = await Bytes.deploy()
-  await bytes.deployed()  
-  console.log(bytes.address)
+  vesting = await Vesting.deploy(["0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2","0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db"],
+  [1000,500],starz_address,0
+  )
+  await vesting.deployed()  
+  console.log(vesting.address)
   
-  const DeltaTimeInventory = await ethers.getContractFactory("DeltaTimeInventory", {
-      libraries: {
-          Bytes: bytes.address,
-      },
-    });
-
-    nFT = await DeltaTimeInventory.deploy("0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9")
-    await nFT.deployed()
 
     
-  saveFrontendFiles(nFT)
+  saveFrontendFiles(vesting)
    
 
 }
 
-function saveFrontendFiles(nFT) {
+function saveFrontendFiles(vesting) {
   const fs = require("fs");
   const contractsDir = "../frontend/src/contract";
 
@@ -61,7 +55,7 @@ function saveFrontendFiles(nFT) {
     fs.mkdirSync(contractsDir);
   }
   let config = `
- export const zpad_addr = "${nFT.address}"
+ export const vesting_addr = "${vesting.address}"
 `
 
   let data = JSON.stringify(config)

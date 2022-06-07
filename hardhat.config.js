@@ -28,7 +28,7 @@ console.log(process.env.privateKey)
 
 module.exports = {
   solidity: {
-    version: "0.5.16",
+    version: "0.8.0",
     settings: {
       optimizer: {
         enabled: true,
@@ -60,14 +60,14 @@ module.exports = {
     disambiguatePaths: false,
     runOnCompile: true,
     strict: true,
-    only: [':DeltaTimeInventory$'],
+    only: [':Vesting$'],
   },
 
   abiExporter: {
     path: '../frontend/src/contract',
     runOnCompile: true,
     clear: true,
-    only: [':DeltaTimeInventory$'],
+    only: [':Vesting$'],
     flat: true,
     spacing: 2,
     pretty: true,
