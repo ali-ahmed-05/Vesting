@@ -6,11 +6,11 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract Vesting is Ownable {
+contract Vesting is Ownable , ReentrancyGuard {
 
     event PayeeAdded(address account, uint256 shares);
-    event PaymentReleased(address to, uint256 amount);
     event ERC20PaymentReleased(IERC20 indexed token, address to, uint256 amount);
     event PaymentReceived(address from, uint256 amount);
 
@@ -92,7 +92,7 @@ contract Vesting is Ownable {
     }
 
     
-    function release(address account) public virtual {
+    function release(address account) public virtual nonReentrant {
         require(_shares[account] > 0, "Vesting: account has no shares");
 
         uint256 payment = _pending(account);
