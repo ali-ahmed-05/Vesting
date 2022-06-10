@@ -89,7 +89,11 @@ contract Vesting is Ownable , ReentrancyGuard {
     }
 
     function daysDifference() public view returns(uint256){
-        return (block.timestamp - startTime) / oneDay;
+        if(block.timestamp< startTime){
+            return 0;
+        }else{
+             return (block.timestamp - startTime) / oneDay;
+        }
     }
 
     function lockedBalance(address account) public view returns(uint256){
@@ -157,7 +161,7 @@ contract Vesting is Ownable , ReentrancyGuard {
     }
 
    function updateAccount(uint256 id , address account) public onlyOwner{
-        require(_exist[id] == true && id != 0, "Vesting: id already exist");
+        require(_exist[id] == true , "Vesting: id already exist");
         
         address previous_address = _idToAddress[id];
         uint256 index = _indexes[_idToAddress[id]];

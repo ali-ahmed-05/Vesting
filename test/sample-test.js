@@ -11,8 +11,7 @@ async function mineNBlocks(n) {
 describe("DeltaTimeInventory ",  function ()  {
 
   
-  let DeltaTimeInventory
-  let nFT
+ 
   let Bytes
   let bytes
 

@@ -24,6 +24,7 @@
     "hardhat-abi-exporter": "^2.4.1",
     "hardhat-contract-sizer": "^2.5.1",
     "mocha": "^9.2.2",
+    "node-xlsx": "^0.21.0",
     "web3modal": "^1.9.4"
   },
   "devDependencies": {
